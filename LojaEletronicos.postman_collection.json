@@ -1,0 +1,155 @@
+{
+	"info": {
+		"_postman_id": "f015cc93-4845-4b06-af76-e5375ad3d2df",
+		"name": "LojaEletronicos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "14258609"
+	},
+	"item": [
+		{
+			"name": "Produto",
+			"item": [
+				{
+					"name": "http://127.0.0.1:10101/produto/getall",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idProdutos\": \"653d55016c6c35389255fc02\",\r\n  \"qtdProduto\": 2,\r\n  \"valorTotal\": 400.50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:10101/produto/653d552f6c6c35389255fc05"
+					},
+					"response": []
+				},
+				{
+					"name": "http://127.0.0.1:10101/produto/getall Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"NomeProduto\": \"GTX 3060\",\r\n    \"CategoriaProduto\": \"Placa de Vídeo\",\r\n    \"QtdEstoque\": 100,\r\n    \"Preco\": 1000.50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:10101/produto/"
+					},
+					"response": []
+				},
+				{
+					"name": "http://127.0.0.1:10101/produto/getall Copy 2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"NomeProduto\": \"GTX 3060\",\r\n    \"CategoriaProduto\": \"Placa de Vídeo\",\r\n    \"QtdEstoque\": 100,\r\n    \"Preco\": 1000.50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:10101/produto/"
+					},
+					"response": []
+				},
+				{
+					"name": "http://127.0.0.1:10101/produto/getall Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://127.0.0.1:10101/produto/653d2e0b1080e33100dcf078"
+					},
+					"response": []
+				},
+				{
+					"name": "http://127.0.0.1:10101/produto/getall Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:10101/produto/getall"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Venda",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idProdutos\": \"653d55016c6c35389255fc02\",\r\n  \"qtdProduto\": 2,\r\n  \"valorTotal\": 400.50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:10101/venda/"
+					},
+					"response": []
+				},
+				{
+					"name": "New Request Copy",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idProdutos\": \"653d55016c6c35389255fc02\",\r\n  \"qtdProduto\": 2,\r\n  \"valorTotal\": 400.50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:10101/venda/"
+					},
+					"response": []
+				},
+				{
+					"name": "New Request Copy 2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idProdutos\": \"653d55016c6c35389255fc02\",\r\n  \"qtdProduto\": 2,\r\n  \"valorTotal\": 400.50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:10101/venda/"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
