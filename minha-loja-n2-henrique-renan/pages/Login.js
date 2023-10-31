@@ -19,6 +19,7 @@ export default function Login({ navigation }) {
             };
             axios.post('http://192.168.56.1:10101/usuario/login', jsonData, config)
             .then(response => {
+                console.log(response.data);
                 navigation.navigate('Home')
             })
             .catch(error => {

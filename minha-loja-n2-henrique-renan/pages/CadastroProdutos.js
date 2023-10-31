@@ -42,6 +42,8 @@ export default function CadastroProdutos({ navigation }) {
     axios.post('http://192.168.56.1:10101/produto/', jsonData, config)
       .then(response => {
         console.log(response.data);
+        Alert.alert('Show!', 'Produto Cadatrado Com Sucesso!')
+        navigation.navigate('Home')
       })
       .catch(error => {
         Alert.alert('Error', 'Erro ao Cadastra Produtos!')
