@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import axios from 'axios';
 import { BarChart } from 'react-native-chart-kit';
+import api from "../services/api";
 
 export default function Dashboard({ navigation }) {
   const [vendas, setVendas] = useState([]);
@@ -10,7 +10,7 @@ export default function Dashboard({ navigation }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://192.168.56.1:10101/Venda/', {
+        const response = await api.get('/Venda/', {
           headers: {
             'Content-Type': 'application/json',
           },

@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { createTable, addProduct, editProduct, deleteProduct } from '../services/database/ProdutoDAO';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
+import api from "../services/api";
 
 
 export default function CadastroProdutos({ navigation }) {
@@ -39,7 +40,7 @@ export default function CadastroProdutos({ navigation }) {
       },
     };
     
-    axios.post('http://192.168.56.1:10101/produto/', jsonData, config)
+    api.post('/produto/', jsonData, config)
       .then(response => {
         console.log(response.data);
         Alert.alert('Show!', 'Produto Cadatrado Com Sucesso!')
@@ -73,7 +74,7 @@ export default function CadastroProdutos({ navigation }) {
         },
       };
       
-      axios.put('http://192.168.56.1:10101/produto/'+id, jsonData, config)
+      api.put('/produto/'+id, jsonData, config)
         .then(response => {
           console.log(response.data);
         })
@@ -102,7 +103,7 @@ export default function CadastroProdutos({ navigation }) {
         },
       };
       
-      axios.delete('http://192.168.56.1:10101/produto/'+id, config)
+      api.delete('/produto/'+id, config)
         .then(response => {
           console.log(response.data);
         })

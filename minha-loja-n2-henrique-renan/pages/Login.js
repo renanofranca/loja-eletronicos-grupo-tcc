@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, TouchableOpacity, StyleSheet, View, Text, TextInput, Alert } from 'react-native';
-import axios from 'axios';
+import api from "../services/api";
 
 export default function Login({ navigation }) {
     const [user, setUser] = useState("");
@@ -17,7 +17,7 @@ export default function Login({ navigation }) {
                 'Content-Type': 'application/json',
             },
             };
-            axios.post('http://192.168.56.1:10101/usuario/login', jsonData, config)
+            api.post('/usuario/login', jsonData, config)
             .then(response => {
                 console.log(response.data);
                 navigation.navigate('Home')

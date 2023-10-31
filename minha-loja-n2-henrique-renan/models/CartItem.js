@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image, Alert } from 'react-native';
 import { createTable, addVenda } from '../services/database/VendaDAO';
-import axios from 'axios';
+import api from '../services/api';
 
 const CartItem = ({ carrinho, navigation }) => {
   const dataAtual = new Date();
@@ -54,8 +54,8 @@ const CartItem = ({ carrinho, navigation }) => {
       },
     };
   
-    axios
-      .post('http://192.168.56.1:10101/venda/', jsonData, config)
+    api
+      .post('/venda/', jsonData, config)
       .then((response) => {
         console.log(response.data);
       })

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { getProduct } from '../services/database/ProdutoDAO';
-import axios from 'axios';
+import api from '../services/api';
 
 const Catalog = ({ showBuyButton, adicionarAoCarrinho, filtro, navigateToCadastroProduto }) => {
   const [products, setProducts] = useState([]);
@@ -13,7 +13,7 @@ const Catalog = ({ showBuyButton, adicionarAoCarrinho, filtro, navigateToCadastr
       },
     };
     
-    axios.get('http://192.168.56.1:10101/produto/', config)
+    api.get('/produto/', config)
       .then(response => {
         const products = response.data;
 

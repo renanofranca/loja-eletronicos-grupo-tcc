@@ -2,8 +2,8 @@ import { getVendas } from '../services/database/VendaDAO';
 import { StyleSheet, Text, TouchableOpacity, View, FlatList } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import api from "../services/api";
 
 export default function ListarVendas({ navigation }) {
   const [vendas, setVendas] = useState([]);
@@ -15,7 +15,7 @@ export default function ListarVendas({ navigation }) {
       },
     };
     
-    axios.get('http://192.168.56.1:10101/Venda/', config)
+    api.get('/Venda/', config)
       .then(response => {
         const products = response.data;
 
