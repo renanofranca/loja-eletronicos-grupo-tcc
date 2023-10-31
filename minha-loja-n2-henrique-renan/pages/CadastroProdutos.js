@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { createTable, addProduct, editProduct, deleteProduct } from '../services/database/ProdutoDAO';
 import { Picker } from '@react-native-picker/picker';
-import { addCategoria, getCategoria, deleteCategoria, updateCategoria } from '../services/database/CategoriaDAO';
+import axios from 'axios';
 
 
 export default function CadastroProdutos({ navigation }) {
@@ -12,60 +12,69 @@ export default function CadastroProdutos({ navigation }) {
 
   const [nome, setNome] = useState(produto ? produto.nome : '')
   const [preco, setPreco] = useState(produto ? produto.preco.toString() : '')
-  const [categoria, setCategoria] = useState(produto ? produto.categoria : '')
-  const [categorias, setCategorias] = useState([]);
-  const [id, setId] = useState(produto ? produto.id : 0)
+  const [categoria, setCategoria] = useState(produto ? produto.categoria : '');
+  const [estoque, setEstoque] = useState(produto ? produto.estoque.toString() : '');
+  const [id, setId] = useState(produto ? produto.id.toString() : '');
   const [isEditing, setIsEditing] = useState(!!produto);
-  const [selectedOption, setSelectedOption] = useState('');
-  const handleSelectChange = (itemValue) => {
-    setCategoria(itemValue);
+
+
+
+  const saveProduct = async () => {
+    const produto = { nome, preco, categoria, estoque }
+    console.log(produto)
+    const jsonData = {
+      "NomeProduto": produto.nome,
+      "CategoriaProduto": produto.categoria,
+      "QtdEstoque": produto.estoque,
+      "Preco": produto.preco
   };
-
-  useEffect(() => {
-    loadCategorias();
-  }, []);
-
-  const loadCategorias = () => {
-    getCategoria()
-      .then((result) => {
-        setCategorias(result);
+    
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    
+    axios.post('http://192.168.56.1:10101/produto/', jsonData, config)
+      .then(response => {
+        console.log(response.data);
       })
-      .catch((error) => {
-        console.error(error);
+      .catch(error => {
+        console.error('Erro na chamada à API:', error);
       });
   };
 
-  const saveProduct = async () => {
-    const produto = { nome, preco, categoria }
-
-
-    try {
-      if (nome.length == 0 || categoria.length == 0) {
-        Alert.alert('Error', 'Preencha todos os campos')
-        return;
-      }
-
-      createTable()
-      addProduct(produto)
-      limparCampos()
-      Alert.alert('Show!', 'Produto Cadastrado Com Sucesso!')
-
-    } catch (error) {
-      console.error('Erro salvando produto:', error)
-      Alert.alert('Error', 'Erro salvando protudo')
-    }
-  };
-
   const editProduto = async () => {
-    const produto = { nome, preco, categoria, id }
-
+    const produto = { nome, preco, categoria, estoque, id }
+    console.log("Edit")
+    console.log(produto)
     try {
       if (nome.length == 0 || categoria.length == 0) {
         Alert.alert('Ops', 'Preencha todos os campos')
         return;
       }
 
-      editProduct(produto)
+      const jsonData = {
+        "NomeProduto": produto.nome,
+        "CategoriaProduto": produto.categoria,
+        "QtdEstoque": produto.estoque,
+        "Preco": produto.preco
+    };
+      
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      
+      axios.put('http://192.168.56.1:10101/produto/'+id, jsonData, config)
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.error('Erro na chamada à API:', error);
+        });
+
       limparCampos()
       Alert.alert('Show!', 'Produto Editado Com Sucesso!')
       navigation.navigate('Home')
@@ -81,7 +90,19 @@ export default function CadastroProdutos({ navigation }) {
 
     try {
 
-      deleteProduct(produto)
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      
+      axios.delete('http://192.168.56.1:10101/produto/'+id, config)
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.error('Erro na chamada à API:', error);
+        });
       limparCampos()
       Alert.alert('Show!', 'Produto Deletado Com Sucesso')
       navigation.navigate('Home')
@@ -125,25 +146,28 @@ export default function CadastroProdutos({ navigation }) {
           editable={true}
         />
         <TextInput
+          placeholder="Categoria do Produto"
+          value={categoria}
+          onChangeText={setCategoria}
+          style={styles.caixaTexto}
+          editable={true}
+        />
+        <TextInput
+          placeholder="Quantidade em Estoque"
+          value={estoque}
+          inputMode='decimal'
+          onChangeText={setEstoque}
+          style={styles.caixaTexto}
+          editable={true}
+        />
+        <TextInput
           placeholder="Preço Unitário"
-          value={preco + ''}
+          value={preco}
           inputMode='decimal'
           onChangeText={setPreco}
           style={styles.caixaTexto}
           editable={true}
         />
-        <View>
-          <Text>Selecione uma Categoria:</Text>
-          <Picker
-            style={styles.picker}
-            selectedValue={categoria}
-            onValueChange={(itemValue) => setCategoria(itemValue)}>
-            <Picker.Item label="Categoria" value="" />
-            {categorias.map((cat) => (
-              <Picker.Item label={cat.nome} value={cat.nome} key={cat.nome} />
-            ))}
-          </Picker>
-        </View>
 
 
         {isEditing ? (

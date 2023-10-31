@@ -1,10 +1,8 @@
 
 import { StyleSheet, Text, TouchableOpacity, View, TextInput, Button, Alert, ScrollView, LogBox } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import ProdutoDAO from '../services/database/ProdutoDAO';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Catalog from '../models/Catalog';
-import { getCategoria } from '../services/database/CategoriaDAO';
 
 
 export default function ListarProdutos({ navigation }) {
@@ -12,30 +10,13 @@ export default function ListarProdutos({ navigation }) {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
   }, [])
   const [filtro, setFiltro] = useState('todos')
-  const [categorias, setCategorias] = useState([]);
-  const [catalogKey, setCatalogKey] = useState(0);
 
-  useEffect(() => {
-    loadCategorias();
-  }, []);
-
-  const loadCategorias = async () => {
-    try {
-      const categorias = await getCategoria();
-      setCategorias(categorias);
-    } catch (error) {
-      console.error('Erro ao carregar categorias:', error);
-    }
-  };
 
   const navigateToCadastroProduto = (produto) => {
+    console.log("Produto")
     console.log(produto)
     navigation.navigate('CadastroProdutos', { produto })
   };
-
-  useEffect(() => {
-    setCatalogKey(catalogKey + 1);
-  }, [filtro]);
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer} >
@@ -50,7 +31,7 @@ export default function ListarProdutos({ navigation }) {
   
       </View>
       <View style={styles.nomeLoja}>
-        <Text style={styles.nome}>CGS</Text>
+        <Text style={styles.nome}>GCS</Text>
       </View>
       <View style={styles.categoria}>
         <TouchableOpacity
@@ -60,18 +41,9 @@ export default function ListarProdutos({ navigation }) {
         >
           <Text style={styles.txtcategoria}>Todos</Text>
         </TouchableOpacity>
-        {categorias.map((cat) => (
-          <TouchableOpacity
-            key={cat.id}
-            onPress={() => {
-              setFiltro(cat.nome);
-            }}>
-            <Text style={styles.txtcategoria}>{cat.nome}</Text>
-          </TouchableOpacity>
-        ))}
       </View>
       <View style={styles.catalogo} >
-        <Catalog key={catalogKey} showBuyButton={false} filtro={filtro} navigateToCadastroProduto={navigateToCadastroProduto} />
+        <Catalog showBuyButton={false} filtro={filtro} navigateToCadastroProduto={navigateToCadastroProduto} />
       </View>
     </ScrollView>
 

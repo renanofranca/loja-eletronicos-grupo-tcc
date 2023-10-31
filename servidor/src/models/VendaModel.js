@@ -17,6 +17,10 @@ const VendaModel = new Schema({
         type: String,
         required: true
       },
+      dataVenda: {
+        type: String,
+        required: true
+      },
       valorTotal: {
         type: Number,
         required: true

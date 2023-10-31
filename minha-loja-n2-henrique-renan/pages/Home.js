@@ -7,14 +7,6 @@ export default function Home({ navigation }) {
 
             <Text style={styles.legenda}>Lojinha do GCS</Text>
             <View style={styles.botoes}>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => {
-                        navigation.navigate('CadastroCategoria')
-                    }}
-                >
-                    <Text style={styles.buttonText}>Cadastrar Nova Categoria</Text>
-                </TouchableOpacity>
 
                 <TouchableOpacity
                     style={styles.button}
@@ -51,6 +43,15 @@ export default function Home({ navigation }) {
                 >
                     <Text style={styles.buttonText}>Listar Vendas</Text>
                 </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => {
+                        navigation.navigate('Login')
+                    }}
+                >
+                    <Text style={styles.buttonText}>Loguout</Text>
+                </TouchableOpacity>
             </View>
 
         </View>
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
     },
     botoes: {
         justifyContent: 'space-evenly',
-        marginTop: 50
+        marginTop: 10
     },
     legenda: {
         fontSize: 32,

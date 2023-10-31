@@ -2,28 +2,49 @@ import { getVendas } from '../services/database/VendaDAO';
 import { StyleSheet, Text, TouchableOpacity, View, FlatList } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import CartItem from '../models/CartItem';
+import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
 export default function ListarVendas({ navigation }) {
   const [vendas, setVendas] = useState([]);
 
   useEffect(() => {
-    loadVendas();
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    
+    axios.get('http://192.168.56.1:10101/Venda/', config)
+      .then(response => {
+        const products = response.data;
+
+        const retorno = products.map((item) => ({
+          id: item._id,
+          produto: item.idProdutos,
+          data: item.dataVenda,
+          precoTotal: item.valorTotal,
+          quantidade: item.qtdProduto
+        }));
+        setVendas(retorno)
+        console.log(products)
+      })
+      .catch(error => {
+        console.error('Erro na chamada à API:', error);
+      });
   }, []);
 
-  const loadVendas = async () => {
-    try {
-      const vendasResult = await getVendas();
-      setVendas(vendasResult);
-      console.log(vendas);
-    } catch (error) {
-      console.error('Erro ao carregar lista de vendas:', error);
-    }
-  };
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            navigation.navigate('Dashboard', { vendas });
+          }}>
+          <Icon name="desktop-outline" size={30} style={styles.icon} />
+        </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
@@ -44,6 +65,7 @@ export default function ListarVendas({ navigation }) {
           <View style={styles.vendaItem}>
             <Text>ID: {item.id}</Text>
             <Text>Produto: {item.produto}</Text>
+            <Text>Quantidade: {item.quantidade}</Text>
             <Text>Data: {item.data}</Text>
             <Text>Preco Total: {item.precoTotal}</Text>
           </View>

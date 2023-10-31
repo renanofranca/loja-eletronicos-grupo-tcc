@@ -7,22 +7,26 @@ import ComprarProdutos from './pages/ComprarProdutos'
 import Cart from './pages/Cart'
 import CartItem from './models/CartItem'
 import Catalog from './models/Catalog';
-import CadastroCategoria from './pages/CadastroCategoria';
 import ListarVendas from './pages/ListarVendas';
+import Dashboard from './pages/Dashboard';
+import Login from './pages/Login';
+import CadastrarUsuario from './pages/CadastrarUsuario';
 
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
 const Routes = createAppContainer(
   createSwitchNavigator({
+    Login,
     Home,
     CadastroProdutos,
     ListarProdutos,
     ComprarProdutos,
     Catalog,
     Cart,
-    CadastroCategoria,
     CartItem,
-    ListarVendas
+    ListarVendas,
+    Dashboard,
+    CadastrarUsuario
   })
 );
 

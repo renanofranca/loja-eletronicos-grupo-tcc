@@ -1,17 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { getProduct } from '../services/database/ProdutoDAO';
+import axios from 'axios';
 
 const Catalog = ({ showBuyButton, adicionarAoCarrinho, filtro, navigateToCadastroProduto }) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    getProduct(filtro)
-      .then((data) => {
-        setProducts(data);
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    
+    axios.get('http://192.168.56.1:10101/produto/', config)
+      .then(response => {
+        const products = response.data;
+
+        const retorno = products.map((item) => ({
+          id: item._id,
+          nome: item.NomeProduto,
+          preco: item.Preco,
+          categoria: item.CategoriaProduto,
+          estoque: item.QtdEstoque
+
+        }));
+        setProducts(retorno)
+        console.log(products)
       })
-      .catch((error) => {
-        console.error(error);
+      .catch(error => {
+        console.error('Erro na chamada à API:', error);
       });
   }, []);
 
@@ -28,7 +46,6 @@ const Catalog = ({ showBuyButton, adicionarAoCarrinho, filtro, navigateToCadastr
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            console.log(filtro)
             adicionarAoCarrinho(item)
             console.log(carrinho)
           }}

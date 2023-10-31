@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, LogBox } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { getCategoria } from '../services/database/CategoriaDAO';
 import Catalog from '../models/Catalog';
 
 export default function ComprarProdutos({ navigation }) {
@@ -10,24 +9,8 @@ export default function ComprarProdutos({ navigation }) {
   const [filtro, setFiltro] = useState('todos');
   const [catalogKey, setCatalogKey] = useState(0);
 
-  useEffect(() => {
-    setCatalogKey(catalogKey + 1);
-  }, [filtro]);
-
-  useEffect(() => {
-    loadCategorias();
-  }, []);
-
-  const loadCategorias = async () => {
-    try {
-      const categorias = await getCategoria();
-      setCategorias(categorias);
-    } catch (error) {
-      console.error('Erro ao carregar categorias:', error);
-    }
-  };
-
   const adicionarAoCarrinho = (produto) => {
+    console.log("Produto" + produto)
     setCarrinho([...carrinho, produto]);
   };
 
@@ -50,7 +33,7 @@ export default function ComprarProdutos({ navigation }) {
         </TouchableOpacity>
       </View>
       <View style={styles.nomeLoja}>
-        <Text style={styles.nome}>CGS</Text>
+        <Text style={styles.nome}>GCS</Text>
       </View>
       <View style={styles.categoria}>
         <TouchableOpacity
