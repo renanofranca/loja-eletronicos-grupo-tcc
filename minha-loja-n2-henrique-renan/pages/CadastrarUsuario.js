@@ -7,8 +7,12 @@ export default function CadastrarUsuario({ navigation }) {
     const [nome, setNome] = useState("");
     const [cpf, setCPF] = useState("");
     const [senha, setSenha] = useState("");
+    const [emailError, setEmailError] = useState("");
+    const [cpfError, setcpfError] = useState("");
 
     const saveUser = async () => {
+        setEmailError("");
+        setcpfError("");
         const produto = { user, nome, cpf, senha }
         if (user.length == 0 || nome.length == 0 || cpf.length == 0 || senha.length == 0) {
             Alert.alert('Ops', 'Preencha todos os campos')
@@ -36,6 +40,12 @@ export default function CadastrarUsuario({ navigation }) {
           })
           .catch(error => {
             Alert.alert('Error', 'Erro ao Cadastrar Usuário')
+            if (error.response.data.errors && error.response.data.errors.Email) {
+                setEmailError("Formato de email inválido");
+              }
+              if (error.response.data.errors && error.response.data.errors.Cpf) {
+                setcpfError("Formato de CPF inválido");
+              }
         });
       };
 
@@ -43,7 +53,7 @@ export default function CadastrarUsuario({ navigation }) {
         <View style={styles.container}>
 
             <Text style={styles.legenda}>Lojinha do GCS</Text>
-            <Text style={styles.legenda}>Cadastrar Usuário</Text>
+            <Text style={styles.legendaSub}>Cadastrar Usuário</Text>
 
             <View>
                 <TextInput
@@ -53,23 +63,28 @@ export default function CadastrarUsuario({ navigation }) {
                 style={styles.caixaTexto}
                 editable={true}
                 />
+                {cpfError ? <Text style={styles.errorText}>{cpfError}</Text> : null}
                 <TextInput
                 placeholder="CPF"
                 value={cpf}
                 onChangeText={setCPF}
-                style={styles.caixaTexto}
+                style={[styles.caixaTexto, cpfError ? styles.caixaErro : null]}
                 editable={true}
                 />
+                {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
+
                 <TextInput
                 placeholder="Email"
                 value={user}
                 onChangeText={setUser}
-                style={styles.caixaTexto}
+                style={[styles.caixaTexto, emailError ? styles.caixaErro : null]}
                 editable={true}
                 />
+
                 <TextInput
                 placeholder="Senha"
                 type="password"
+                secureTextEntry={true}
                 value={senha}
                 onChangeText={setSenha}
                 style={styles.caixaTexto}
@@ -85,6 +100,14 @@ export default function CadastrarUsuario({ navigation }) {
                     }}
                 >
                     <Text style={styles.buttonText}>Cadastrar Usuário</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => {
+                        navigation.navigate('Login')
+                    }}s
+                >
+                    <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
 
             </View>
@@ -110,13 +133,18 @@ const styles = StyleSheet.create({
     },
     botoes: {
         justifyContent: 'space-evenly',
-        marginTop: 50
+        marginTop: 10
     },
     legenda: {
         fontSize: 32,
         color: '#e76f51',
         marginTop: 32,
-        marginBottom: 25
+    },
+    legendaSub: {
+        fontSize: 32,
+        color: '#e76f51',
+        marginTop: 5,
+        marginBottom: 10
     },
     button: {
         backgroundColor: '#f4a261',

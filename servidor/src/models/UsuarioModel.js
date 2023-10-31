@@ -14,11 +14,28 @@ const schema = new mongoose.Schema({
   },
   Email: {
     type: String,
-    required: true
+    required: true,
+    unique: true, // Para garantir que o email seja único
+    validate: {
+      validator: (v) => {
+        // Use uma expressão regular para validar o formato de email
+        return /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/.test(v);
+      },
+      message: 'Formato de email inválido',
+    },
   },
   Cpf: {
     type: String,
-    required: true
+    required: true,
+    unique: true, // Para garantir que o CPF seja único
+    validate: {
+      validator: (v) => {
+        // Remover "." e "-" antes de aplicar a expressão regular
+        const cpfSemPontuacao = v.replace(/[.-]/g, '');
+        return /^\d{11}$/.test(cpfSemPontuacao);
+      },
+      message: 'Formato de CPF inválido (deve conter apenas dígitos numéricos)',
+    },
   },
   Senha: {
     type: String,

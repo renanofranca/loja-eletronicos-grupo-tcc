@@ -44,6 +44,7 @@ export default function Login({ navigation }) {
                 placeholder="Senha"
                 type="password"
                 value={senha}
+                secureTextEntry={true}
                 onChangeText={setSenha}
                 style={styles.caixaTexto}
                 editable={true}

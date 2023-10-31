@@ -21,7 +21,11 @@ export default function CadastroProdutos({ navigation }) {
 
   const saveProduct = async () => {
     const produto = { nome, preco, categoria, estoque }
-    console.log(produto)
+    if (nome.length == 0 || categoria.length == 0 || preco.length == 0 || estoque.length == 0 ) {
+      Alert.alert('Ops', 'Preencha todos os campos')
+      return;
+    }
+
     const jsonData = {
       "NomeProduto": produto.nome,
       "CategoriaProduto": produto.categoria,
@@ -40,7 +44,7 @@ export default function CadastroProdutos({ navigation }) {
         console.log(response.data);
       })
       .catch(error => {
-        console.error('Erro na chamada à API:', error);
+        Alert.alert('Error', 'Erro ao Cadastra Produtos!')
       });
   };
 
@@ -49,7 +53,7 @@ export default function CadastroProdutos({ navigation }) {
     console.log("Edit")
     console.log(produto)
     try {
-      if (nome.length == 0 || categoria.length == 0) {
+      if (nome.length == 0 || categoria.length == 0 || preco.length == 0 || estoque.length == 0 ) {
         Alert.alert('Ops', 'Preencha todos os campos')
         return;
       }
